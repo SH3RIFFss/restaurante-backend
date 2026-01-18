@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,26 +12,26 @@ import jakarta.persistence.Table;
 public class ItensPedidosModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    //muitos itens pedidos para um pedido
-    @ManyToOne
-    @JoinColumn(name = "idProduto")
-    private ProdutosModel produtos; 
-    //muitos itens pedidos para um produto
-    @ManyToOne
-    @JoinColumn(name = "idPedido")
-    private PedidosModel pedidos;
-
+    private int idProduto;
+    @Column(nullable = false)
+    private int idPedido;
     @Column(nullable = false)
     private double valorUnitario;
-
-    @Column(nullable = false)
-    private int quantidade;
-
     @Column(nullable = false)
     private int tipo;
 
-    
+    public int getIdProduto() {
+        return idProduto;
+    }
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
+    }
+    public int getIdPedido() {
+        return idPedido;
+    }
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
+    }
     public double getValorUnitario() {
         return valorUnitario;
     }
@@ -46,30 +44,5 @@ public class ItensPedidosModel {
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
-    public PedidosModel getPedidos() {
-        return pedidos;
-    }
-    public void setPedidos(PedidosModel pedidos) {
-        this.pedidos = pedidos;
-    }
-    public int getQuantidade() {
-        return quantidade;
-    }
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public ProdutosModel getProdutos() {
-        return produtos;
-    }
-    public void setProdutos(ProdutosModel produtos) {
-        this.produtos = produtos;
-    }
-    
 
 }
