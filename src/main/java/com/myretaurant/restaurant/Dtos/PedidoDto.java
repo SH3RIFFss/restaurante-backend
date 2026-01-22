@@ -1,5 +1,7 @@
 package com.myretaurant.restaurant.Dtos;
 
-public record PedidoDto(int idFuncionario, double total, String data) {
+import java.util.Set;
+
+public record PedidoDto(int idFuncionario, Set<ItensPedidosDto> itensPedidos) {
 
 }

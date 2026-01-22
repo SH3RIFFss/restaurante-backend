@@ -3,6 +3,9 @@ package com.myretaurant.restaurant.Models;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,15 +28,21 @@ public class PedidosModel {
     @JoinColumn(name = "idFuncionario")
     private FuncionarioModel funcionario;
 
-    @Column(nullable = false)
+    @Column (nullable = true)//Adicionar logica de pegar a data e hora do sistema antes de persistir
     private String dataHora;
 
     @Column(nullable = false)
     private double total;
     //relacionado com a tabela itens-pedidos
-    @OneToMany(mappedBy = "pedidos",fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "pedidos",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ItensPedidosModel> itensPedidos=new HashSet<>();
     
+
+    public void adicionar(ItensPedidosModel itensPedidosModel){
+        itensPedidos.add(itensPedidosModel);
+        itensPedidosModel.setPedidos(this);
+    }
     public int getId() {
         return id;
     }
