@@ -43,6 +43,7 @@ public class PedidoService {
             itensPedidos.setPedidos(pedido);
             itensPedidos.setProdutos(produto);
             itensPedidos.setQuantidade(itemDto.quantidade());
+            itensPedidos.setTipo(produto.getTipo());
             itensPedidos.setValorUnitario(produto.getValor());
             
             double subTotal = itensPedidos.getValorUnitario() * itensPedidos.getQuantidade();

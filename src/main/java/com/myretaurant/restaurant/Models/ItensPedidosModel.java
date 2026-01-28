@@ -31,7 +31,7 @@ public class ItensPedidosModel {
     private double valorUnitario;
 
     @Column(nullable = false)
-    private int tipo;
+    private String tipo;
 
     public double getValorUnitario() {
         return valorUnitario;
@@ -39,10 +39,10 @@ public class ItensPedidosModel {
     public void setValorUnitario(double valorUnitario) {
         this.valorUnitario = valorUnitario;
     }
-    public int getTipo() {
+    public String getTipo() {
         return tipo;
     }
-    public void setTipo(int tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
     public int getId() {
