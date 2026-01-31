@@ -1,8 +1,11 @@
 package com.myretaurant.restaurant.Models;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -15,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,18 +31,23 @@ public class PedidosModel {
     @ManyToOne
     @JoinColumn(name = "idFuncionario")
     private FuncionarioModel funcionario;
-
-    @Column (nullable = true)//Adicionar logica de pegar a data e hora do sistema antes de persistir
-    private String dataHora;
-
+    
+    @Column (nullable = false)//Adicionar logica de pegar a data e hora do sistema antes de persistir
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss") //aprenta a formatação da resposta não para entrada
+    private LocalDateTime dataHora;
+    
     @Column(nullable = false)
     private double total;
+    
     //relacionado com a tabela itens-pedidos
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "pedidos",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ItensPedidosModel> itensPedidos=new HashSet<>();
-    
-
+    //tratamento de data e hora 
+    @PrePersist
+    public void dataAgora(){
+        this.dataHora=LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS); //para perssistir apenas até os segundos
+    }
     public void adicionar(ItensPedidosModel itensPedidosModel){
         itensPedidos.add(itensPedidosModel);
         itensPedidosModel.setPedidos(this);
@@ -50,12 +59,6 @@ public class PedidosModel {
         this.id = id;
     }
     
-    public String getDataHora() {
-        return dataHora;
-    }
-    public void setDataHora(String dataHora) {
-        this.dataHora = dataHora;
-    }
     public double getTotal() {
         return total;
     }

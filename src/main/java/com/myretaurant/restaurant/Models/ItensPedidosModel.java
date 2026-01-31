@@ -42,7 +42,7 @@ public class ItensPedidosModel {
     public String getTipo() {
         return tipo;
     }
-    public void setTipo(String tipo) {
+    public void setTipo(String    tipo) {
         this.tipo = tipo;
     }
     public int getId() {
