@@ -1,6 +1,7 @@
 package com.myretaurant.restaurant.Services;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.myretaurant.restaurant.Models.ItensPedidosModel;
 import com.myretaurant.restaurant.Models.PedidosModel;
 import com.myretaurant.restaurant.Models.ProdutosModel;
 import com.myretaurant.restaurant.Repositories.FuncionarioRepository;
+import com.myretaurant.restaurant.Repositories.ItenPedidoRepository;
 import com.myretaurant.restaurant.Repositories.PedidoRepository;
 import com.myretaurant.restaurant.Repositories.ProdutoRepository;
 
@@ -23,11 +25,17 @@ public class PedidoService {
     private final PedidoRepository pedidoR;
     private final FuncionarioRepository funcionarioR;
     private final ProdutoRepository produtoR;
-    public PedidoService(PedidoRepository pedidoRepository, FuncionarioRepository funcionarioRepository, ProdutoRepository produtoRepository){
+    private final ItenPedidoRepository itensR;
+    public PedidoService(PedidoRepository pedidoRepository, FuncionarioRepository funcionarioRepository, ProdutoRepository produtoRepository, ItenPedidoRepository itenPedidoRepository){
         this.pedidoR=pedidoRepository;
         this.funcionarioR=funcionarioRepository;
         this.produtoR=produtoRepository;
+        this.itensR=itenPedidoRepository;
+    }   
+    public List<ItensPedidosModel> listarPedidos(){
+        return itensR.findAll();
     }
+    
     @Transactional
     public PedidosModel pedir(PedidoDto pedidoDto){
         PedidosModel pedido = new PedidosModel();

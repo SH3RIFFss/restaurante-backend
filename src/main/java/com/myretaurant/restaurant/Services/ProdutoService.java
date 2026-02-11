@@ -1,5 +1,7 @@
 package com.myretaurant.restaurant.Services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.myretaurant.restaurant.Dtos.ProdutoDto;
@@ -13,6 +15,9 @@ public class ProdutoService {
     private final ProdutoRepository produtoR;
     public ProdutoService(ProdutoRepository produtoRepository){
         this.produtoR=produtoRepository;
+    }
+    public List<ProdutosModel> listarProdutos(){
+        return produtoR.findAll();
     }
     @Transactional
     public ProdutosModel salvarProduto(ProdutoDto produtoDto){

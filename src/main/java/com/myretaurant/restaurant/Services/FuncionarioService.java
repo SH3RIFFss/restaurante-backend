@@ -1,5 +1,7 @@
 package com.myretaurant.restaurant.Services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.myretaurant.restaurant.Dtos.FuncionarioDto;
@@ -14,6 +16,11 @@ public class FuncionarioService {
     public FuncionarioService(FuncionarioRepository funcionarioRepository){
         this.funcuinarioR=funcionarioRepository;
     }
+
+    public List<FuncionarioModel> listarFuncionarios(){
+        return funcuinarioR.findAll();
+    }
+
     @Transactional
     public FuncionarioModel salvarFuncionario(FuncionarioDto funcionarioDto){
         FuncionarioModel funcionario=new FuncionarioModel();
